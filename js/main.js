@@ -288,7 +288,13 @@ var morpionObj = {
 						}
 					}
 				}
-				minUserLuck()
+				minUserLuck();
+
+				// fonction qui maximise la chance de l'ia
+				maxIaLuck = function(){
+					// ici mon code
+				}
+				maxIaLuck();
 				// console.log(plusPetiteSomme);
 				
 				// console.log(morpionObj.tableUserClickIndice);
