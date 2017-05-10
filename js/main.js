@@ -204,96 +204,106 @@ var morpionObj = {
 				// generation nombre aleatoire
 				var nombreAleatoire = Math.floor(Math.random()*9);
 				// end
-				for(var i=0, c=combinaisonPlusPetiteSomme.length; i<c;i++){
-					switch(combinaisonPlusPetiteSomme[i]){
-						case 0:
-							for(var j=0; j<3; j++){
-								if (!document.getElementById(''+j+'').hasChildNodes()) {
-									nombreAleatoire=j;
-									j=4
-								};
-							}
-						break;
-						case 1:
-							for(var j=3; j<6; j++){
-								if (!document.getElementById(''+j+'').hasChildNodes()) {
-									nombreAleatoire=j;
-									j=6
-								};
-							}
-						break;
-						case 2:
-							for(var j=6; j<9; j++){
-								if (!document.getElementById(''+j+'').hasChildNodes()) {
-									nombreAleatoire=j;
-									j=9
-								};
-							}
-						break;
-						case 3:
-							for(var j=0; j<7; j++){
-								if (!document.getElementById(''+j+'').hasChildNodes()) {
-									nombreAleatoire=j;
-									j=7
-								};
-								j=j+2;
-							}
-						break;
-						case 4:
-							for(var j=1; j<8; j++){
-								if (!document.getElementById(''+j+'').hasChildNodes()) {
-									nombreAleatoire=j;
-									j=8
-								};
-								j=j+2;
-							}
-						break;
-						case 5:
-							for(var j=2; j<9; j++){
-								if (!document.getElementById(''+j+'').hasChildNodes()) {
-									nombreAleatoire=j;
-									j=9
-								};
-								j=j+2;
-							}
-						break;
-						case 6:
-							for(var j=0; j<9; j++){
-								if (!document.getElementById(''+j+'').hasChildNodes()) {
-									nombreAleatoire=j;
-									j=9
-								};
-								j=j+3;
-							}
-						break;
-						case 7:
-							for(var j=2; j<7; j++){
-								if (!document.getElementById(''+j+'').hasChildNodes()) {
-									nombreAleatoire=j;
-									j=7
-								};
-								j=j+1;
-							}
-						break;
-						default:
-							alert("attention une combinaison inconnue!!!");
-						break;
+				
+				// function qui minimise la chance du joueur
+				minUserLuck = function(){
+					// cette fonction parcour le tableau plusPetitcombinaison et trouve les cases
+					// vide pour jouer( cet tableau renvoi les combinaison qui maximise la 
+					// chance de l'user)
+					
+					for(var i=0, c=combinaisonPlusPetiteSomme.length; i<c;i++){
+						switch(combinaisonPlusPetiteSomme[i]){
+							case 0:
+								for(var j=0; j<3; j++){
+									if (!document.getElementById(''+j+'').hasChildNodes()) {
+										nombreAleatoire=j;
+										j=4
+									};
+								}
+							break;
+							case 1:
+								for(var j=3; j<6; j++){
+									if (!document.getElementById(''+j+'').hasChildNodes()) {
+										nombreAleatoire=j;
+										j=6
+									};
+								}
+							break;
+							case 2:
+								for(var j=6; j<9; j++){
+									if (!document.getElementById(''+j+'').hasChildNodes()) {
+										nombreAleatoire=j;
+										j=9
+									};
+								}
+							break;
+							case 3:
+								for(var j=0; j<7; j++){
+									if (!document.getElementById(''+j+'').hasChildNodes()) {
+										nombreAleatoire=j;
+										j=7
+									};
+									j=j+2;
+								}
+							break;
+							case 4:
+								for(var j=1; j<8; j++){
+									if (!document.getElementById(''+j+'').hasChildNodes()) {
+										nombreAleatoire=j;
+										j=8
+									};
+									j=j+2;
+								}
+							break;
+							case 5:
+								for(var j=2; j<9; j++){
+									if (!document.getElementById(''+j+'').hasChildNodes()) {
+										nombreAleatoire=j;
+										j=9
+									};
+									j=j+2;
+								}
+							break;
+							case 6:
+								for(var j=0; j<9; j++){
+									if (!document.getElementById(''+j+'').hasChildNodes()) {
+										nombreAleatoire=j;
+										j=9
+									};
+									j=j+3;
+								}
+							break;
+							case 7:
+								for(var j=2; j<7; j++){
+									if (!document.getElementById(''+j+'').hasChildNodes()) {
+										nombreAleatoire=j;
+										j=7
+									};
+									j=j+1;
+								}
+							break;
+							default:
+								alert("attention une combinaison inconnue!!!");
+							break;
+						}
 					}
 				}
-				console.log(plusPetiteSomme);
+				minUserLuck()
+				// console.log(plusPetiteSomme);
 				
 				// console.log(morpionObj.tableUserClickIndice);
 				var testeElement = document.createElement('div');
 				testeElement.id = "testeElement";
 				testeElement.className = "testeElement";
 				
-
+				console.log(comptUsersClick.length);
 				// verifie si nombre aleatoire est egale a une case deja joué par le users
 				while(morpionObj.elementCss[nombreAleatoire].hasChildNodes()){
 					nombreAleatoire = Math.floor(Math.random()*9);
-					console.log('computer'+comptUsersClick)
 					if (comptUsersClick.length>4) break;
 				}
+				// cette ligne empêche l'ia de cocher une case quand il n'y a plus de case vide
+				if (comptUsersClick.length>4) plusPetiteSomme=0;
 				if(plusPetiteSomme==2) {
 					morpionObj.tableIndiceIa[nombreAleatoire]=0;
 					setTimeout(function(){
