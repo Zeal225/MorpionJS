@@ -87,6 +87,7 @@ var morpionObj = {
 		initialiseGame : function()
 		{
 			this.buttonNewPartie = document.getElementById('new-button');
+			var _self = this;
 			this.buttonNewPartie.addEventListener('click', function()
 			{
 				// on met quiJoue a son oppose pour determiner qui de l'ia ou le user joue.
@@ -98,7 +99,7 @@ var morpionObj = {
 				// initialiser le compteur des case coche qui detecte si je jeux est fini ou pas
 				morpionObj.comptCaseJouer = 0;
 				// remplissage des tableaux vide
-				morpionObj.uiObj.writeTableIndiceNegatif();
+				_self.writeTableIndiceNegatif();
 				morpionObj.modalVictoire.style.display = "none";
 				morpionObj.modalVictoire.style.backgroundColor = null;
 				while(document.getElementById('human-icon')){
@@ -126,7 +127,7 @@ var morpionObj = {
 		victoireUsers : function()
 		{
 			morpionObj.tableIndiceNegatif = [];
-			morpionObj.uiObj.writeTableIndiceNegatif();
+			this.writeTableIndiceNegatif();
 			morpionObj.winnerParagraph.innerText = "Vous avez gagnez!";
 			morpionObj.modalVictoire.style.display = "block";
 			morpionObj.compteurUser +=1;
@@ -136,7 +137,7 @@ var morpionObj = {
 		matchNull : function()
 		{
 			morpionObj.tableIndiceNegatif = [];
-			morpionObj.uiObj.writeTableIndiceNegatif();
+			this.writeTableIndiceNegatif();
 			morpionObj.winnerParagraph.innerText = "Hoopp match null!";
 			morpionObj.modalVictoire.style.display = "block";
 			morpionObj.modalVictoire.style.backgroundColor = "rgba(255,0,0,0.5)";
@@ -169,7 +170,7 @@ var morpionObj = {
 			
 			// si som =0 initialisation du tableau des indices, remettre les indice à 1, et affichage victoire
 			if (som==0) {
-				morpionObj.uiObj.victoireUsers();
+				this.victoireUsers();
 			}
 		},
 		horizontaleVerification : function(debut,fin,indiceCombinaisson)
@@ -190,7 +191,7 @@ var morpionObj = {
 			
 			// si som=0 initialisation du tableau des indices, remettre les indice à 1, et affichage victoire
 			if (som==0) {
-				morpionObj.uiObj.victoireUsers();
+				this.victoireUsers();
 			}
 		},
 		diagonale1Verification : function(debut,fin,indiceCombinaisson)
@@ -211,7 +212,7 @@ var morpionObj = {
 			
 			// si som =0 initialisation du tableau des indices, remettre les indice à 1, et affichage victoire
 			if (som==0) {
-				morpionObj.uiObj.victoireUsers();
+				this.victoireUsers();
 			}
 		},
 		diagonale2Verification : function(debut,fin,indiceCombinaisson)
@@ -232,26 +233,27 @@ var morpionObj = {
 
 			// si som =0 initialisation du tableau des indices, remettre les indice à 1, et affichage victoire
 			if (som==0) {
-				morpionObj.uiObj.victoireUsers();
+				this.victoireUsers();
 			}
 		},
 		lanceVerification : function()
 		{
 			// vertical
-			morpionObj.uiObj.verticaleVerifacation(0,3,0);
-			morpionObj.uiObj.verticaleVerifacation(3,6,1);
-			morpionObj.uiObj.verticaleVerifacation(6,9,2);
+			this.verticaleVerifacation(0,3,0);
+			this.verticaleVerifacation(3,6,1);
+			this.verticaleVerifacation(6,9,2);
 			// horizontal
-			morpionObj.uiObj.horizontaleVerification(0,7,3);
-			morpionObj.uiObj.horizontaleVerification(1,8,4);
-			morpionObj.uiObj.horizontaleVerification(2,9,5);
+			this.horizontaleVerification(0,7,3);
+			this.horizontaleVerification(1,8,4);
+			this.horizontaleVerification(2,9,5);
 			// diagonal1
-			morpionObj.uiObj.diagonale1Verification(0,9,6);
+			this.diagonale1Verification(0,9,6);
 			// diagonal2
-			morpionObj.uiObj.diagonale2Verification(2,7,7);
+			this.diagonale2Verification(2,7,7);
 		},
 		createHumanIcon : function()
 		{
+			var _self = this;
 			// identification de la case coché par le joueur humain
 			for(var j = 0; j < morpionObj.elementCss.length; j++)
 			{
@@ -265,7 +267,7 @@ var morpionObj = {
 						morpionObj.tableIndiceNegatif[this.id] = 0;
 						// lance la fonction qui verifie les combinaison pour cherche victoire
 						
-						morpionObj.uiObj.lanceVerification();
+						_self.lanceVerification();
 
 						this.humanIcon = document.createElement('div');
 						this.humanIcon.id = "human-icon";
@@ -318,17 +320,17 @@ var morpionObj = {
 		calculSomIa : {
 			init : function()
 			{
-				morpionObj.iaObj.calculSomIa.verticaleVerification(0, 3, 0);
-				morpionObj.iaObj.calculSomIa.verticaleVerification(3, 6, 1);
-				morpionObj.iaObj.calculSomIa.verticaleVerification(6, 9, 2);
+				this.verticaleVerification(0, 3, 0);
+				this.verticaleVerification(3, 6, 1);
+				this.verticaleVerification(6, 9, 2);
 
-				morpionObj.iaObj.calculSomIa.horizontaleVerification(0, 7, 3);
-				morpionObj.iaObj.calculSomIa.horizontaleVerification(1, 8, 4);
-				morpionObj.iaObj.calculSomIa.horizontaleVerification(2, 9, 5);
+				this.horizontaleVerification(0, 7, 3);
+				this.horizontaleVerification(1, 8, 4);
+				this.horizontaleVerification(2, 9, 5);
 
-				morpionObj.iaObj.calculSomIa.diagonale1Verification(0, 9, 6);
+				this.diagonale1Verification(0, 9, 6);
 
-				morpionObj.iaObj.calculSomIa.diagonale2Verification(2, 7, 7);
+				this.diagonale2Verification(2, 7, 7);
 
 				morpionObj.tableCombinaisonPetitIa = [];
 				morpionObj.renvoiPetitElement = Math.min(...morpionObj.tableFaireGagnerIa);
@@ -337,7 +339,7 @@ var morpionObj = {
 						morpionObj.tableCombinaisonPetitIa.push(i);
 					};
 				};
-				console.log(morpionObj.tableFaireGagnerIa);
+				// console.log(morpionObj.tableFaireGagnerIa);
 			},
 			verticaleVerification : function(debut,fin,indiceCombinaison)
 			{
